@@ -19,7 +19,7 @@
     "css-loader": "^1.0.1",
     "es6-promise": "^4.2.5",
     "graphql": "^14.0.2",
-    "graphql-tag": "^2.10.0",
+    "graphql-tag": "^2.10.1",
     "nuxt": "^2.3.4",
     "purecss": "^1.0.0",
     "ts-loader": "^5.3.3",
