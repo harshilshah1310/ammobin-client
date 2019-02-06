@@ -23,7 +23,7 @@
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
     "nuxt": "^2.3.4",
-    "nuxt-ts": "^2.4.2",
+    "nuxt-ts": "^2.4.3",
     "purecss": "^1.0.0",
     "v-img-fallback": "^0.1.4",
     "vue-i18n": "^8.7.0",
