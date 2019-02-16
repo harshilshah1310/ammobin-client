@@ -19,7 +19,7 @@
     "copy-webpack-plugin": "^4.6.0",
     "core-js": "^2.6.3",
     "css-loader": "^2.1.0",
-    "es6-promise": "^4.2.5",
+    "es6-promise": "^4.2.6",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
     "nuxt": "^2.3.4",
