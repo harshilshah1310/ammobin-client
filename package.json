@@ -6,7 +6,7 @@
   "description": "The place to view ammo prices across Canada",
   "dependencies": {
     "@nuxtjs/apollo": "^4.0.0-rc2.3",
-    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/axios": "^5.4.1",
     "@nuxtjs/icon": "^2.6.0",
     "@nuxtjs/manifest": "^2.6.0",
     "@nuxtjs/meta": "^2.6.0",
