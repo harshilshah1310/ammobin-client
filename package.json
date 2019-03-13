@@ -37,7 +37,7 @@
     "pretty-quick": "^1.8.0",
     "ramda": "^0.26.1",
     "snyk": "^1.122.0",
-    "surge": "^0.20.1"
+    "surge": "^0.20.3"
   },
   "scripts": {
     "test": "npm run build",
