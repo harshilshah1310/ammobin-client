@@ -26,22 +26,22 @@ export default {
     if (this.page > 1) {
       link.push({
         rel: 'prev',
-        href: getUrl(url, this.page - 1, this.calibre),
+        href: getUrl(url, this.page - 1, this.subtype),
       })
     }
     if (this.ammoListings && this.ammoListings.pages > this.page) {
       link.push({
         rel: 'next',
-        href: getUrl(url, this.page + 1, this.calibre),
+        href: getUrl(url, this.page + 1, this.subtype),
       })
     }
     return {
-      title: (this.calibre || this.ammotype || 'Ammo') + ' Prices', //TODO: en francais
+      title: (this.subtype || this.itemtype || 'Ammo') + ' Prices', //TODO: en francais
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: `The place to view the best ${this.calibre || this.ammotype || 'ammo'} prices across ${this
+          content: `The place to view the best ${this.subtype || this.itemtype || 'ammo'} prices across ${this
             .province || 'Canada'}.`, //TODO: en francais
         },
       ],
@@ -61,10 +61,10 @@ export default {
     ammoListings: {
       query: gql`
         query getAmmoListings(
-          $ammoType: AmmoType
+          $itemtype: ItemType
           $page: Int
           $pageSize: Int
-          $calibre: String
+          $subtype: String
           $province: Province
           $vendor: String
           $query: String
@@ -72,10 +72,10 @@ export default {
           $sortOrder: SortOrder
         ) {
           ammoListings(
-            ammoType: $ammoType
+            itemType: $itemtype
             page: $page
             pageSize: $pageSize
-            calibre: $calibre
+            subType: $subtype
             province: $province
             vendor: $vendor
             sortField: $sortField
@@ -86,7 +86,7 @@ export default {
             items {
               name
               brand
-              calibre
+              subType
               minPrice
               maxPrice
               minUnitCost
@@ -107,9 +107,9 @@ export default {
         // Use vue reactive properties here
         return {
           page: this.page,
-          calibre: this.calibre || null,
+          subType: this.subtype || null,
           pageSize: this.pageSize,
-          ammoType: this.ammotype || null,
+          itemtype: this.itemtype || null,
           province: this.province || null,
           vendor: this.vendor || null,
           query: this.query || null,
@@ -118,17 +118,18 @@ export default {
         }
       },
       prefetch: ({ route }) => {
-        let ammoType = route.params.ammotype || route.query.ammotype || null
-        if (['rimfire', 'centerfire', 'shotgun'].indexOf(ammoType) === -1) {
+        let itemType = route.params.itemtype || route.query.itemtype || null
+        // todo: fix this
+        if (false && ['rimfire', 'centerfire', 'shotgun'].indexOf(itemType) === -1) {
           return false // hard 404
         }
 
         return {
           page: Number(route.query.page) || 1,
-          calibre: route.query.calibre || null,
+          subtype: route.query.subtype || null,
           pageSize: Number(route.query.pageSize) || 25,
           province: route.query.province || null,
-          ammoType,
+          itemType,
           vendor: route.query.vendor || null,
           query: route.query.query || null,
           sortField: route.query.sortField || null,
@@ -158,8 +159,8 @@ export default {
     page() {
       return Number(this.$route.query.page) || 1
     },
-    calibre() {
-      return this.$route.query.calibre || null
+    subtype() {
+      return this.$route.query.subtype || null
     },
     province() {
       return this.$route.query.province || null
@@ -167,11 +168,8 @@ export default {
     pageSize() {
       return Number(this.$route.query.pageSize) || 25
     },
-    ammotype() {
-      let ammoType = this.$route.params.ammotype || this.$route.query.ammotype || null
-      if (ammoType === 'ammo') {
-        ammoType = null
-      }
+    itemtype() {
+      let ammoType = this.$route.params.itemtype || this.$route.query.itemtype || null
       return ammoType
     },
     vendor() {
@@ -192,7 +190,7 @@ export default {
   },
   validate({ params }) {
     // todo: use proper const here
-    return [null, 'rimfire', 'centerfire', 'shotgun'].indexOf(params.ammotype) >= 0
+    return true || [null, 'rimfire', 'centerfire', 'shotgun'].indexOf(params.ammotype) >= 0
   },
 }
 </script>
