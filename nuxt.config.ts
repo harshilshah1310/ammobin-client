@@ -98,10 +98,6 @@ export default <NuxtConfiguration>{
     },
   },
   generate: {
-
-    routes: ['/', '/fr/'].reduce(
-      (lst, prep) => [...lst, ...ITEM_TYPES.map(post => prep + post)],
-      [] as Array<string>
-    ),
+    routes: ['/', '/fr/'].reduce((lst, prep) => [...lst, ...ITEM_TYPES.map(post => prep + post)], [] as Array<string>),
   },
 }
