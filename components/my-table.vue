@@ -21,10 +21,10 @@
           <option>100</option>
         </select>
       </div>
-      <div class="pure-u-1 pure-u-md-1-6">
-        <label for="calibre">{{ $t('table.calibre') }}</label>
+      <div class="pure-u-1 pure-u-md-1-6" v-if="isAmmoType">
+        <label for="subtype">{{ $t('table.calibre') }}</label>
 
-        <select name="calibre" :value="calibre" @change="updateCalibre($event.target.value)" class="pure-input-1">
+        <select name="subtype" :value="subtype" @change="updateSubtype($event.target.value)" class="pure-input-1">
           <option></option>
           <optgroup :label="$t('default.centerfire')" v-if="showCenterfireCalibres">
             <option v-for="c in centerfireCalibres" :key="c">{{ c }}</option>
@@ -171,6 +171,7 @@ declare const BASE_API_URL: string
 import { centerFireCalibres } from 'ammobin-classifier/build/centerfire-calibres'
 import { rimfireCalibres } from 'ammobin-classifier/build/rimfire-calibres'
 import { shotgunGauges } from 'ammobin-classifier/build/shotgun-gauges'
+import { AMMO_TYPES } from './constants'
 
 export default {
   data: function() {
@@ -189,7 +190,7 @@ export default {
           }, {}) || {},
     }
   },
-  props: ['rows', 'pages', 'ammotype', 'vendors'],
+  props: ['rows', 'pages', 'itemtype', 'vendors'],
   watch: {
     rows() {
       this.showVendors =
@@ -202,11 +203,15 @@ export default {
     },
   },
   computed: {
+    // is the current item type ammo ? (as opposed to reloading)
+    isAmmoType() {
+      return AMMO_TYPES.includes(this.itemtype)
+    },
     page() {
       return Number(this.$route.query.page) || 1
     },
-    calibre() {
-      return this.$route.query.calibre
+    subtype() {
+      return this.$route.query.subtype
     },
     pageSize() {
       return Number(this.$route.query.pageSize) || 25
@@ -227,13 +232,13 @@ export default {
       return this.$route.query.sortOrder || 'ASC'
     },
     showCenterfireCalibres() {
-      return !this.ammotype || this.ammotype === 'centerfire'
+      return !this.itemtype || this.itemtype === 'centerfire'
     },
     showRimfireCalibres() {
-      return !this.ammotype || this.ammotype === 'rimfire'
+      return !this.itemtype || this.itemtype === 'rimfire'
     },
     showShotgunGuages() {
-      return !this.ammotype || this.ammotype === 'shotgun'
+      return !this.itemtype || this.itemtype === 'shotgun'
     },
   },
   methods: {
@@ -267,13 +272,13 @@ export default {
       })
     },
     toggleVendors(row) {
-      const { name, brand, calibre } = row
+      const { name, brand, subtype } = row
       const open = !!this.showVendors[name]
       this.showVendors[name] = !open
 
       if (!open) {
         const view = JSON.stringify({
-          calibre,
+          subtype,
           brand,
         })
 
@@ -291,10 +296,10 @@ export default {
       })
       setImmediate(() => window.scroll(0, 0)) //scroll to top of page
     },
-    updateCalibre(calibre) {
+    updateSubtype(subtype) {
       this.$router.push({
         name: this.$route.name,
-        query: Object.assign({}, this.$route.query, { calibre }),
+        query: Object.assign({}, this.$route.query, { subtype }),
       })
     },
     updatePageSize(pageSize) {
