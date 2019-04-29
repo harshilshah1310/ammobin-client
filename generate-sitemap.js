@@ -1,10 +1,16 @@
 const fs = require('fs')
-const { head } = require('ramda')
-const ws = fs.createWriteStream('./static/sitemap.txt')
-;['', 'fr/'].forEach(lang => {
+const {
+  head
+} = require('ramda')
+const ws = fs.createWriteStream('./static/sitemap.txt');
+['', 'fr/'].forEach(lang => {
   const site = `https://ammobin.ca/${lang}`
 
-  ;['', 'about', 'dank', 'rimfire', 'shotgun', 'centerfire'].forEach(s => ws.write(`${site}${s}\n`))
+  // todo: enable reloading sections
+  ;
+  ['', 'about', 'dank', 'rimfire', 'shotgun', 'centerfire',
+    /*'reloading', 'powder', 'shot', 'case', 'primer',*/
+  ].forEach(s => ws.write(`${site}${s}\n`))
 
   require('ammobin-classifier/build/rimfire-calibres')
     .rimfireCalibres.map(l => head(l).toUpperCase())
