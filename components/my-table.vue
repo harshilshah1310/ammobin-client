@@ -9,12 +9,17 @@
           @change="updateQuery($event.target.value)"
           class="pure-input-1"
           placeholder="ie: Barnaul, surplus, 00 Buck"
-        />
+        >
       </div>
 
       <div class="pure-u-1 pure-u-md-1-6">
         <label for="pageSize">{{ $t('table.pageSize') }}</label>
-        <select id="pageSize" :value="pageSize" @change="updatePageSize($event.target.value)" class="pure-input-1">
+        <select
+          id="pageSize"
+          :value="pageSize"
+          @change="updatePageSize($event.target.value)"
+          class="pure-input-1"
+        >
           <option>25</option>
           <option>50</option>
           <option>75</option>
@@ -24,7 +29,12 @@
       <div class="pure-u-1 pure-u-md-1-6" v-if="isAmmoType">
         <label for="subtype">{{ $t('table.calibre') }}</label>
 
-        <select name="subtype" :value="subtype" @change="updateSubtype($event.target.value)" class="pure-input-1">
+        <select
+          name="subtype"
+          :value="subtype"
+          @change="updateSubtype($event.target.value)"
+          class="pure-input-1"
+        >
           <option></option>
           <optgroup :label="$t('default.centerfire')" v-if="showCenterfireCalibres">
             <option v-for="c in centerfireCalibres" :key="c">{{ c }}</option>
@@ -40,14 +50,24 @@
 
       <div class="pure-u-1 pure-u-md-1-6">
         <label for="province">{{ $t('table.province') }}</label>
-        <select id="province" :value="province" @change="updateProvince($event.target.value)" class="pure-input-1">
+        <select
+          id="province"
+          :value="province"
+          @change="updateProvince($event.target.value)"
+          class="pure-input-1"
+        >
           <option v-for="c in provinces" :key="c">{{ c }}</option>
         </select>
       </div>
 
       <div class="pure-u-1 pure-u-md-1-6">
         <label for="vendor">{{ $t('table.vendor') }}</label>
-        <select id="vendor" :value="vendor" @change="updateVendor($event.target.value)" class="pure-input-1">
+        <select
+          id="vendor"
+          :value="vendor"
+          @change="updateVendor($event.target.value)"
+          class="pure-input-1"
+        >
           <option v-for="c in vendors" :key="c">{{ c }}</option>
         </select>
       </div>
@@ -55,23 +75,37 @@
       <div v-if="pages > 0" class="pure-u-1 pure-u-md-1-3">
         <label>{{ $t('table.page') }}</label>
         <div>
-          <button @click="updatePage(1)" class="pure-button button-xsmall" v-bind:disabled="page === 1">|<<</button>
-          <button @click="updatePage(page - 1)" class="pure-button button-xsmall" v-bind:disabled="page === 1">
-            <
-          </button>
+          <button
+            @click="updatePage(1)"
+            class="pure-button button-xsmall"
+            v-bind:disabled="page === 1"
+          >|<<</button>
+          <button
+            @click="updatePage(page - 1)"
+            class="pure-button button-xsmall"
+            v-bind:disabled="page === 1"
+          ><</button>
           {{ page }} {{ $t('table.of') }} {{ pages }}
-          <button @click="updatePage(page + 1)" class="pure-button button-xsmall" v-bind:disabled="page === pages">
-            >
-          </button>
-          <button @click="updatePage(pages)" class="pure-button button-xsmall" v-bind:disabled="page === pages">
-            >>|
-          </button>
+          <button
+            @click="updatePage(page + 1)"
+            class="pure-button button-xsmall"
+            v-bind:disabled="page === pages"
+          >></button>
+          <button
+            @click="updatePage(pages)"
+            class="pure-button button-xsmall"
+            v-bind:disabled="page === pages"
+          >>>|</button>
         </div>
       </div>
     </div>
     <div class="pure-g row">
       <div class="pure-u-lg-1-5 pure-u-1"></div>
-      <div class="pure-u-lg-1-5 pure-u-1-4 title" @click="sortBy('name')" :class="{ active: sortField == 'name' }">
+      <div
+        class="pure-u-lg-1-5 pure-u-1-4 title"
+        @click="sortBy('name')"
+        :class="{ active: sortField == 'name' }"
+      >
         <h4>
           {{ $t('table.name') }}
           <span class="arrow" :class="sortOrder"></span>
@@ -97,7 +131,11 @@
           <span class="arrow" :class="sortOrder"></span>
         </h4>
       </div>
-      <div class="pure-u-lg-1-5 pure-u-1-4 title" @click="sortBy('link')" :class="{ active: sortField == 'link' }">
+      <div
+        class="pure-u-lg-1-5 pure-u-1-4 title"
+        @click="sortBy('link')"
+        :class="{ active: sortField == 'link' }"
+      >
         <h4>
           {{ $t('table.link') }}
           <span class="arrow" :class="sortOrder"></span>
@@ -111,24 +149,34 @@
 
     <div v-for="(row, index) in rows" :key="row.name" class="pure-g row fix-row item">
       <div class="pure-u-lg-1-5 pure-u-md-1 pure-u-1">
-        <img class="pure-img img-cell" v-bind:src="row.img || defaultImg" v-img-fallback="defaultImg" :alt="row.name" />
+        <img
+          class="pure-img img-cell"
+          v-bind:src="row.img || defaultImg"
+          v-img-fallback="defaultImg"
+          :alt="row.name"
+        >
       </div>
       <div class="pure-u-lg-1-5 pure-u-md-1-4 pure-u-1 m-b-1 capitalize">{{ row.name }}</div>
       <div class="pure-u-lg-1-5 pure-u-md-1-4 pure-u-1 m-b-1">
-        <div v-if="row.minPrice !== row.maxPrice">${{ row.minPrice.toFixed(2) }} - ${{ row.maxPrice.toFixed(2) }}</div>
+        <div
+          v-if="row.minPrice !== row.maxPrice"
+        >${{ row.minPrice.toFixed(2) }} - ${{ row.maxPrice.toFixed(2) }}</div>
         <div v-else>${{ row.minPrice.toFixed(2) }}</div>
       </div>
       <div class="pure-u-lg-1-5 pure-u-md-1-4 pure-u-1 m-b-1">
-        <div v-if="row.minUnitCost && row.minUnitCost !== row.maxUnitCost">
-          ${{ row.minUnitCost.toFixed(2) }} - ${{ row.maxUnitCost.toFixed(2) }}
-        </div>
-        <div v-else-if="row.minUnitCost && row.minUnitCost === row.maxUnitCost">${{ row.minUnitCost.toFixed(2) }}</div>
+        <div
+          v-if="row.minUnitCost && row.minUnitCost !== row.maxUnitCost"
+        >${{ row.minUnitCost.toFixed(2) }} - ${{ row.maxUnitCost.toFixed(2) }}</div>
+        <div
+          v-else-if="row.minUnitCost && row.minUnitCost === row.maxUnitCost"
+        >${{ row.minUnitCost.toFixed(2) }}</div>
         <div v-else if="!row.minUnitCost">N/A</div>
       </div>
       <div class="pure-u-lg-1-5 pure-u-md-1-4 pure-u-1 m-b-1">
-        <button class="pure-button" @click="toggleVendors(row)">
-          {{ showVendors[row.name] ? $t('table.hide') : $t('table.show') }} {{ $t('table.vendors') }}
-        </button>
+        <button
+          class="pure-button"
+          @click="toggleVendors(row)"
+        >{{ showVendors[row.name] ? $t('table.hide') : $t('table.show') }} {{ $t('table.vendors') }}</button>
       </div>
       <div class="pure-u-1" v-if="showVendors[row.name] === true">
         <div v-for="v in row.vendors" :key="v.link" class="pure-g m-b-1">
@@ -138,9 +186,12 @@
             <span v-if="v.unitCost">({{ v.unitCost.toFixed(2) }} {{ $t('table.perRound') }})</span>
           </div>
           <div class="pure-u-lg-1-5 pure-u-md-1-4 pure-u-1-5">
-            <a @click="itemClicked(v.link)" v-bind:href="v.link" target="_blank" rel="nofollow noopener"
-              >{{ $t('table.buyFrom') }} {{ v.vendor }}</a
-            >
+            <a
+              @click="itemClicked(v.link)"
+              v-bind:href="v.link"
+              target="_blank"
+              rel="nofollow noopener"
+            >{{ $t('table.buyFrom') }} {{ v.vendor }}</a>
           </div>
         </div>
       </div>
@@ -149,17 +200,27 @@
       <div class="pure-u-lg-1-2 pure-u-1" v-if="pages > 0">
         <div>{{ $t('table.page') }}</div>
         <div>
-          <button @click="updatePage(1)" class="pure-button button-xsmall" v-bind:disabled="page === 1">|<<</button>
-          <button @click="updatePage(page - 1)" class="pure-button button-xsmall" v-bind:disabled="page === 1">
-            <
-          </button>
+          <button
+            @click="updatePage(1)"
+            class="pure-button button-xsmall"
+            v-bind:disabled="page === 1"
+          >|<<</button>
+          <button
+            @click="updatePage(page - 1)"
+            class="pure-button button-xsmall"
+            v-bind:disabled="page === 1"
+          ><</button>
           {{ page }} {{ $t('table.of') }} {{ pages }}
-          <button @click="updatePage(page + 1)" class="pure-button button-xsmall" v-bind:disabled="page === pages">
-            >
-          </button>
-          <button @click="updatePage(pages)" class="pure-button button-xsmall" v-bind:disabled="page === pages">
-            >>|
-          </button>
+          <button
+            @click="updatePage(page + 1)"
+            class="pure-button button-xsmall"
+            v-bind:disabled="page === pages"
+          >></button>
+          <button
+            @click="updatePage(pages)"
+            class="pure-button button-xsmall"
+            v-bind:disabled="page === pages"
+          >>>|</button>
         </div>
       </div>
     </div>
@@ -176,10 +237,27 @@ import { AMMO_TYPES } from './constants'
 export default {
   data: function() {
     return {
-      centerfireCalibres: centerFireCalibres.map(l => l[0].toUpperCase()).sort(),
+      centerfireCalibres: centerFireCalibres
+        .map(l => l[0].toUpperCase())
+        .sort(),
       rimfireCalibres: rimfireCalibres.map(l => l[0].toUpperCase()).sort(),
       shotgunGauges: shotgunGauges.map(l => l[0].toUpperCase()).sort(),
-      provinces: [null, 'AB', 'BC', 'MB', 'NB', 'NS', 'NT', 'NL', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT'],
+      provinces: [
+        null,
+        'AB',
+        'BC',
+        'MB',
+        'NB',
+        'NS',
+        'NT',
+        'NL',
+        'NU',
+        'ON',
+        'PE',
+        'QC',
+        'SK',
+        'YT',
+      ],
       defaultImg: require('~/assets/blank.png'),
       showVendors:
         this.rows
@@ -243,7 +321,11 @@ export default {
   },
   methods: {
     itemClicked(link) {
-      const click = JSON.stringify({ link })
+      const click = JSON.stringify({
+        link,
+        itemtype: this.itemtype,
+        subtype: this.subtype,
+      })
       if (!navigator.sendBeacon) {
         this.$axios.post(BASE_API_URL + 'track-click', click)
       } else {
@@ -280,6 +362,7 @@ export default {
         const view = JSON.stringify({
           subtype,
           brand,
+          itemtype: this.itemtype,
         })
 
         if (!navigator.sendBeacon) {
