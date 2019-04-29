@@ -22,9 +22,8 @@ import gql from 'graphql-tag'
 export default {
   head() {
     const link: any[] = []
-    const url = `https://ammobin.ca/${
-      this.$i18n.locale !== 'en' ? this.$i18n.locale + '/' : ''
-    }${this.itemtype || 'ammo'}`
+    const url = `https://ammobin.ca/${this.$i18n.locale !== 'en' ? this.$i18n.locale + '/' : ''}${this.itemtype ||
+      'ammo'}`
     if (this.page > 1) {
       link.push({
         rel: 'prev',
@@ -43,9 +42,8 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: `The place to view the best ${this.subtype ||
-            this.itemtype ||
-            'ammo'} prices across ${this.province || 'Canada'}.`, //TODO: en francais
+          content: `The place to view the best ${this.subtype || this.itemtype || 'ammo'} prices across ${this
+            .province || 'Canada'}.`, //TODO: en francais
         },
       ],
       link,
@@ -171,8 +169,7 @@ export default {
       return Number(this.$route.query.pageSize) || 25
     },
     itemtype() {
-      let itemtype =
-        this.$route.params.itemtype || this.$route.query.itemtype || null
+      let itemtype = this.$route.params.itemtype || this.$route.query.itemtype || null
       return itemtype
     },
     vendor() {
