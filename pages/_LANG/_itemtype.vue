@@ -108,7 +108,7 @@ export default {
         // Use vue reactive properties here
         return {
           page: this.page,
-          subType: this.subtype || null,
+          subtype: this.subtype || null,
           pageSize: this.pageSize,
           itemtype: this.itemtype || null,
           province: this.province || null,
@@ -127,7 +127,7 @@ export default {
 
         return {
           page: Number(route.query.page) || 1,
-          subtype: route.query.subtype || null,
+          subtype: route.query.subtype || route.query.calibre || null,
           pageSize: Number(route.query.pageSize) || 25,
           province: route.query.province || null,
           itemType,

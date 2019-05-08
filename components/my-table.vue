@@ -289,7 +289,7 @@ export default {
       return Number(this.$route.query.page) || 1
     },
     subtype() {
-      return this.$route.query.subtype
+      return this.$route.query.subtype || this.$route.query.calibre
     },
     pageSize() {
       return Number(this.$route.query.pageSize) || 25
